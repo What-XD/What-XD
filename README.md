@@ -1,3 +1,3 @@
-![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=What-XD&theme=github-compact)
+![Snake](https://raw.githubusercontent.com/What-XD/What-XD/refs/heads/output/snake.svg)
 
 # Hi?
