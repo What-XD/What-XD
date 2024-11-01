@@ -1,34 +1,32 @@
-name: Generate MultiSnake
+name: Generate snake animation
 
 on:
-  schedule:
-    - cron: "0 */6 * * *" # Runs every six hours
-  workflow_dispatch: # Allows manual launch
+  schedule: # execute every 12 hours
+    - cron: "* */12 * * *"
+
+  workflow_dispatch:
+
+  push:
+    branches:
+    - master
 
 jobs:
   generate:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
 
     steps:
-      # Checkout repository
-      - name: 📥 Checkout the repository
-        uses: actions/checkout@v2
-
-      # Generate Snake animation
-      - name: 🐍 Generate MultiSource Snake animation
-        uses: Zqzqsb/MultiSourceSnake@v1.0
+      - name: generate snake.svg
+        uses: Platane/snk/svg-only@v3
         with:
-          GITHUB_USER: What-XD
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          outputs: |
-            dist/github-snake.svg
-            dist/github-snake-dark.svg?palette=github-dark
-            dist/ocean.gif?color_snake=orange&color_dots=#bfd6f6,#8dbdff,#64a1f4,#4b91f1,#3c7dd9
+          github_user_name: ${{ github.repository_owner }}
+          outputs: dist/snake.svg?palette=github-dark
 
-      # Push outputs
-      - name: 🚀 Push GitHub Snake animation to the output branch
-        uses: crazy-max/ghaction-github-pages@v2.5.0
+
+      - name: push snake.svg to the output branch
+        uses: crazy-max/ghaction-github-pages@v3.1.0
         with:
           target_branch: output
           build_dir: dist
